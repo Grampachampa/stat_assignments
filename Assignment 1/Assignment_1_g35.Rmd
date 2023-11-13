@@ -64,16 +64,131 @@ The fact that P(C|D) is larger than P(C) shows that a cancer diagnosis leads to 
 ## Task 3
 ## a)
 #### (i)
+
+```{r message=FALSE, warning=FALSE}
+# Setting a seed
+set.seed(123)
+
+cn = 115
+cdf=2
+ci = sequence(cn)
+cx = rchisq(ci, df=cdf)
+
+qqnorm(cx)
+abline(0, 1, col = 'red')
+text(2, 2.25, "y = x")
+
+hist(cx)
+boxplot(cx)
+
+```
+
 #### (ii)
+```{r message=FALSE, warning=FALSE}
+tn = 105
+tdf=4
+ti = sequence(tn)
+tx = rt(ti, df=tdf)
+
+qqnorm(tx)
+abline(0, 1, col = 'red')
+text(2, 2.25, "y = x")
+
+hist(tx)
+boxplot(tx)
+```
 ## b)
 #### (i)
-#### (ii)
-#### (iii)  
-#### (iv)
-## c)
-#### (i)
-#### (ii)
+```{r message=FALSE, warning=FALSE}
+smallerThan3 = pnorm(3)
+print(smallerThan3)
 
+biggerthanM0.5 = 1-pnorm(-0.5)
+print(biggerthanM0.5)
+ 
+betweenM1and2 = pnorm(2) - pnorm(-1)
+print(betweenM1and2)
+
+```
+#### (ii)
+```{r message=FALSE, warning=FALSE}
+variance = 4
+sd = sqrt(variance)
+
+smallerThan3 = pnorm(3, mean = 3, sd = sd)
+print(smallerThan3)
+
+biggerthanM0.5 = 1-pnorm(-0.5, mean = 3, sd = sd)
+print(biggerthanM0.5)
+ 
+betweenM1and2 = pnorm(2, mean = 3, sd = sd) - pnorm(-1, mean = 3, sd = sd)
+print(betweenM1and2)
+
+NFpercSmaller = qnorm(0.95, mean = 3, sd = sd)
+print(NFpercSmaller)
+
+```
+
+#### (iii)
+```{r message=FALSE, warning=FALSE}
+
+mean = -1
+sd = 5
+
+samples = rnorm(1000)
+
+corrected_samples = (samples * sd) +mean 
+
+sample_mean = mean(corrected_samples)
+print(sample_mean)
+
+sample_sd = sd(corrected_samples)
+print(sample_sd)
+
+```
+
+
+#### (iv)
+```{r message=FALSE, warning=FALSE}
+verification_function <- function(min = -Inf, max = Inf){
+  
+  sample_100 = rnorm(100)
+  sample_100k = rnorm(100000)
+  
+  prob_sample_100 = mean(sample_100 > min & sample_100 < max)
+  prob_sample_100k = mean(sample_100k > min & sample_100k < max)
+  
+  cat("Probability (Sample 100):", prob_sample_100, "\n")
+  cat("Probability (Sample 100k):", prob_sample_100k, "\n")
+}
+
+verification_function(max = 3)
+verification_function(min = -0.5)
+verification_function(min = -1, max = 2)
+```
+
+## c)
+
+#### (i)
+```{r message=FALSE, warning=FALSE}
+diabetes <- read.csv("diabetes.csv")
+chol = diabetes$chol
+
+qqnorm(chol)
+
+hist(chol)
+boxplot(chol)
+```
+
+#### (ii)
+```{r message=FALSE, warning=FALSE}
+vlbw <- read.csv("vlbw.csv")
+bwt = vlbw$bwt
+
+qqnorm(bwt)
+hist(bwt)
+boxplot(bwt)
+```
 ## Task 4
 ## a)
 ## b)
