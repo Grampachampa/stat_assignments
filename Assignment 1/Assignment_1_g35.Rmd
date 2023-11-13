@@ -13,7 +13,7 @@ Suppose the following:
 \newline
 - P(D) is the probability of a positive cancer diagnosis 
 \newline
-- P(C) is the probability of an individual having cancer
+- P(C) is the probability of an isndividual having cancer
 
 Then, given the information given in exercise 1.3:
 \[
@@ -54,6 +54,7 @@ The two events that a person has cancer and that the test is positive are depend
 - p(C) = 0.004\newline
 The fact that P(C|D) is larger than P(C) shows that a cancer diagnosis leads to an increased risk in cancer, when compared to the population average.
 
+\newpage
 ## Task 2
 ## a)
 ## b)
@@ -61,6 +62,7 @@ The fact that P(C|D) is larger than P(C) shows that a cancer diagnosis leads to 
 ## d) 
 ## e)
 
+\newpage
 ## Task 3
 ## a)
 #### (i)
@@ -68,6 +70,8 @@ The fact that P(C|D) is larger than P(C) shows that a cancer diagnosis leads to 
 ```{r message=FALSE, warning=FALSE}
 # Setting a seed
 set.seed(123)
+par(mfrow = c(1,3))
+
 
 cn = 115
 cdf=2
@@ -85,6 +89,8 @@ boxplot(cx)
 
 #### (ii)
 ```{r message=FALSE, warning=FALSE}
+par(mfrow = c(1,3))
+
 tn = 105
 tdf=4
 ti = sequence(tn)
@@ -97,6 +103,7 @@ text(2, 2.25, "y = x")
 hist(tx)
 boxplot(tx)
 ```
+\newline
 ## b)
 #### (i)
 ```{r message=FALSE, warning=FALSE}
@@ -171,6 +178,8 @@ verification_function(min = -1, max = 2)
 
 #### (i)
 ```{r message=FALSE, warning=FALSE}
+par(mfrow = c(1,3))
+
 diabetes <- read.csv("diabetes.csv")
 chol = diabetes$chol
 
@@ -182,6 +191,8 @@ boxplot(chol)
 
 #### (ii)
 ```{r message=FALSE, warning=FALSE}
+par(mfrow = c(1,3))
+
 vlbw <- read.csv("vlbw.csv")
 bwt = vlbw$bwt
 
@@ -189,8 +200,77 @@ qqnorm(bwt)
 hist(bwt)
 boxplot(bwt)
 ```
+\newpage
 ## Task 4
+
 ## a)
+```{r message=FALSE, warning=FALSE}
+source("function02.txt")
+n = 1000
+meandiff = numeric(n)
+
+
+for (i in 1:1000){
+  meandiff[i] = mean(diffdice(i))
+  
+}
+
+plot(meandiff, type = 'l', col = "blue", xlab = "Number of Comparisons", ylab = "Mean Difference",
+   main = "Mean difference of 2 dice")
+abline(h = 1.9444, col = "red", lwd = 2)
+
+legend("topright", legend=c("Expected value of the absolute difference", "Measured value of the absolute difference"),
+       col=c("red", "blue"), lty=1, cex=0.8)
+
+
+```
 ## b)
+```{r message=FALSE, warning=FALSE}
+source("function02.txt")
+
+n = 100000
+Diffs100k = diffdice(n)
+expectation = mean(Diffs100k)
+print(expectation)
+
+expectation = 0
+
+for (i in 0 : 6){
+  probability_of_i = length(which(Diffs100k == i))/n
+  
+  expectation = expectation + (probability_of_i*i) 
+}
+expectation = expectation
+
+print(expectation)
+
+
+
+probabiliy_of_3 = length(which(Diffs100k == 3))/n
+print(probabiliy_of_3)
+
+```
 ## c)
+```{r message=FALSE, warning=FALSE}
+source("function02.txt")
+par(mfrow = c(2,2))
+CLTGenerator = function(n = 1, sample_means = 1000){
+  values = numeric(sample_means)
+  for (i in 1:sample_means){
+    values[i] = mean(diffdice(n))
+  }
+  h <- hist(values)
+  xfit <- seq(min(values), max(values), length = 1000) 
+  yfit <- dnorm(xfit, mean = 1.9444, sd = sqrt(((1.4326)^2)/n)) 
+  yfit <- yfit * diff(h$mids[1:2]) * length(values)
+  lines(xfit, yfit, col = "black", lwd = 2)
+
+}
+
+CLTGenerator(n = 1)
+CLTGenerator(n = 8)
+CLTGenerator(n = 64)
+CLTGenerator(n = 256)
+```
+
 ## d)
