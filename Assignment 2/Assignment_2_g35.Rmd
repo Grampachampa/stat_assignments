@@ -111,4 +111,16 @@ Since $0.195 > -2.093$ and $0.195 < 2.093$, we fail to reject $H_0$. There is no
 
 # Task 4
 
+```{r}
+df = read.table('alice.txt',sep=' ')
+alice = df[1]
+bob = df[2]
+
+t.test(alice, bob, conf.level = 0.9)
+
+
+```
+
+
+
 # Task 5
