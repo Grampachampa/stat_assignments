@@ -70,6 +70,11 @@ $[-11.729, 6.2 + 24.129]$
 
 # Task 3
 
+Test Claim: Whether there is a difference in the population mean volumes of first- and
+second-born babies.
+
+$H_0: \mu1 = \mu2, H_1: \mu1 \neq \mu2, \alpha = 0.05$
+
 In task 3, we are given the following values:
 
 $\bar{x}_1 = 1131.3$
@@ -84,35 +89,26 @@ $n_1 = 25$
 
 $n_2 = 20$
 
-Test Claim: Whether there is a difference in the population mean volumes of first- and
-second-born babies.
+We will be using the following test statistic:
 
-H_0 = \mu1 != \mu2
-H_1 = \mu1 = \mu2
-significance_level = 0.05
+$t_2 = \frac{x_1-x_2}{\sqrt{\frac{s_1^2}{n1} + \frac{s_2^2}{n2}}}$
 
-n1 = 25
-x1 = 1131.3
-s1 = 129.0
+When all values are accounted for, it looks as follows:
 
-n1 = 20
-x2 = 1123.8
-s2 = 127.2
+$t_2 = \frac{1131.3-1123.8}{\sqrt{\frac{129^2}{25}+\frac{127.2^2}{20}}} = \frac{7.5}{\sqrt{\frac{16641}{25} + \frac{16179.84}{20}}} = \frac{7.5}{\sqrt{1474.632}} = 0.195$
 
-value of test_statistic:
+Under the null hypothesis, the test statistic has a t-distribution with $\tilde{n}$ degrees of freedom. Without a calculator, we can make the assumption that $\tilde{n} = min(n_1-1, n_2-1) = min(24,19) = 19$.
 
-t2 = (1131.3-1123.8)/sqrt(((129^2)/25)+((127.2^2)/20))
+$t_{19,0.05/2} = 2.093$
 
-t2 = 0.078
+Since $0.195 > -2.093$ and $0.195 < 2.093$, we fail to reject $H_0$. There is not sufficient evidence to reject the claim that first- and second-born children have the same mean brain volume. 
 
-n = min(25-1, 20-1) = min(24, 19) = 19
+\textbf{Assumptions Made:}\newline
+- $\tilde{n} = min(n_1-1, n_2-1)$ - This is an estimate of the true value of $\tilde{n}$\newline
+- $H_0: \mu1 = \mu2$ - This assumption was made in order to evaluate the data.\newline
+- Additionally, a t-distribution is assumed for the collected data.\newline
 
-t19,0.025 = 1.729
 
-since 0.078 < 1.729 and 0.078 > -1.729 we faile to reject H0.
-
-There is not sufficient evidence to warrant rejection of the claim whether there is a difference in the population mean volumes of first- and
-second-born babies
 # Task 4
 
 # Task 5
