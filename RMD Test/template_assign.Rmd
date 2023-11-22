@@ -74,6 +74,7 @@ Here is the use of a footnote^[This is a footnote.].
 Want an image? This will do it. 
 To depict an image (say, `my_image.jpg` which should be in your current working directory), use this command 
 
+![caption for my image](my_image.jpg)
 
 ### Tables  
 

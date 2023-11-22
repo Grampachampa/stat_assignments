@@ -69,6 +69,21 @@ $[-11.729, 6.2 + 24.129]$
 
 
 # Task 3
+
+In task 3, we are given the following values:
+
+$\bar{x}_1 = 1131.3$
+
+$\bar{x}_2 =  1123.8$
+
+$s_1 = 129.0$
+
+$s_2 = 127.2$
+
+$n_1 = 25$
+
+$n_2 = 20$
+
 Test Claim: Whether there is a difference in the population mean volumes of first- and
 second-born babies.
 
