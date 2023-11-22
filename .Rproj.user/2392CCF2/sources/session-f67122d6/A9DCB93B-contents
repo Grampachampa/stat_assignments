@@ -73,7 +73,7 @@ The fact that P(C|D) is larger than P(C) shows that a cancer diagnosis leads to 
 
 ## a)
 Below is sample space $\Omega$, for which each outcome is equally likely: \newline\newline
-$\Omega$ = {0-minutes-late, 1-minute-late, 2-minutes-late, 3-minutes-late, 4-minutes-late, 5-mimutes, 6-minutes-late, 7-minutes-late, 8-minutes-late, 9-minutes-late, 10-minutes-late, 11-minutes-late, 12-minutes-late, 13-minutes-late, 14-minutes-late}
+$\Omega$ = {0-minutes, 1-minute, 2-minutes, 3-minutes, 4-minutes, 5-mimutes, 6-minutes, 7-minutes, 8-minutes, 9-minutes, 10-minutes, 11-minutes, 12-minutes, 13-minutes, 14-minutes}
 
 
 ## b)
@@ -85,7 +85,7 @@ P(W = 3) occurs when the individual is 12 minutes late, or 1/15.\newline
 P(W = 4) occurs when the individual is 11 minutes late, or 1/15.\newline
 P(W<0) = 0, as one can not be negatively late.\newline\newline
 
-The sum of all of these probabilities is 9/15, therefore P(W>=5) is (1 - 9/15) = 6/15 = 0.4
+The sum of all of these probabilities is 9/15, therefore P(W>=5) is (1 - 9/15) = 6/15
 
 ## c)
 

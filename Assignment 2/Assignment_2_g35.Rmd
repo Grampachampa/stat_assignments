@@ -69,7 +69,35 @@ $[-11.729, 6.2 + 24.129]$
 
 
 # Task 3
+Test Claim: Whether there is a difference in the population mean volumes of first- and
+second-born babies.
 
+H_0 = \mu1 != \mu2
+H_1 = \mu1 = \mu2
+significance_level = 0.05
+
+n1 = 25
+x1 = 1131.3
+s1 = 129.0
+
+n1 = 20
+x2 = 1123.8
+s2 = 127.2
+
+value of test_statistic:
+
+t2 = (1131.3-1123.8)/sqrt(((129^2)/25)+((127.2^2)/20))
+
+t2 = 0.078
+
+n = min(25-1, 20-1) = min(24, 19) = 19
+
+t19,0.025 = 1.729
+
+since 0.078 < 1.729 and 0.078 > -1.729 we faile to reject H0.
+
+There is not sufficient evidence to warrant rejection of the claim whether there is a difference in the population mean volumes of first- and
+second-born babies
 # Task 4
 
 # Task 5
