@@ -111,16 +111,99 @@ Since $0.195 > -2.093$ and $0.195 < 2.093$, we fail to reject $H_0$. There is no
 
 # Task 4
 
-```{r}
+# Task 5
+
+## a) 
+
+In order to give the an estimate for the difference of mean working time, and a 90% confidence interval, we used the code below. We assume that the samples are paired, as each sample for Alice has a corresponding sample for Bob for the same night (and vice versa). Therefore, if one of the two were to experience a change in working hours that day (eg. due to a late shipment, or leaving early due to a holiday), then the other would also likely experience a similar change. This has to be accounted for in the calculation. The findings of this code will be printed below.
+```{r, results = "asis"}
 df = read.table('alice.txt',sep=' ')
-alice = df[1]
-bob = df[2]
+alice = df[,1]
+bob = df[,2]
 
-t.test(alice, bob, conf.level = 0.9)
+t_test_result = t.test(alice, bob, conf.level = 0.9, paired = TRUE)
 
+mean_difference = t_test_result$estimate
+
+confidence_interval = t_test_result$conf.int
+
+cat("The estimated mean difference is:", mean_difference, "\\newline The 90%",
+    "confidence interval for the mean difference is: [", 
+    confidence_interval,"]")
 
 ```
 
+## b) 
+
+Because the test that would be appropriate for this section is the same as has been carried out in part a) (two tailed t-test of paired samples with a 90% confidence interval), all we need to do is get the p value, and see if it is smaller than $\alpha = 0.1$. The findings of this code will be printed below.
+```{r, results = "asis"}
+alpha = 0.1
+
+p_value = t_test_result$p.value
+
+if (p_value < alpha) {
+  cat("The calculated p-value is:", p_value, 
+      "\\newline Reject the  manager's (null) hypothesis. There is enough",
+      "evidence to suggest that the mean working hours for Alice and Bob",
+      " are different.")
+} else {
+  cat("The calculated p-value is:", p_value, 
+      "\\newline Fail to reject the manager's (null) hypothesis. There is",
+      "not enough evidence to suggest a difference in the mean working hours",
+      "for Alice and Bob.")
+}
+```
+
+## c)
+
+In order to test Alice's hypothesis, we need to make a few adjustments to the code written in parts a) and b). Namely, we need to redefine $\alpha = 0.01$, and we also need to perform a one-tailed t-test on the data - with the alternative hypothesis that the true mean difference is greater than 0. Since the true mean difference is Alice's mean - Bob's mean, this ensures that we test specifically for Alice's hours. Then, as before, we must compare the new p-value with the $\alpha$. The findings of this code will be printed below.
+```{r, results = "asis"}
+alpha = 0.01
+
+# Conf.level doesn't need changing, but it's nice to see it reflect alpha
+alice_t_test_result = t.test(alice, bob, conf.level = 0.99, paired = TRUE, 
+                             alternative = "greater")
+
+alice_p_value = alice_t_test_result$p.value
+  
+if (alice_p_value < alpha) {
+  cat("The calculated p-value is:", alice_p_value, 
+      "\\newline Reject the  manager's (null) hypothesis. There is enough",
+      "evidence to suggest that Alice's mean working hours are greater than",
+      "those of Bob")
+} else {
+  cat("The calculated p-value is:", alice_p_value, "\\newline Fail to reject",
+      "the manager's (null) hypothesis. There is not enough evidence to",
+      "suggest that Alice's mean working hours are greater than those of Bob.")
+}
+
+```
+
+## d)
+More changes need to be enacted to the code from before. We will now be using the prop.test function, since we are testing the proportion of hours per evening that are above 3.8. As a result, now all that's needed is to calculate the proportion for Alice and Bob in a one-tailed test (similar to before), with the alternative hypothesis that the true mean difference is greater than 0. Additionally, we will need to set "paired" to false, as the hours are now assumed to be randomly sampled from different days. This will give us a p value, which we can compare to $\alpha = 0.01$, in order to see if the results are statistically significant. The findings of this code will be printed below.
+```{r, results = "asis"}
+
+alpha = 0.01
+threshold = 3.8
+
+alice_above = sum(alice > threshold)
+bob_above = sum(bob > threshold)
+total = length(alice)
+
+prop_test = prop.test(c(alice_above, bob_above), c(total, total), 
+                      conf.level = 0.99, alternative = "greater")
+prop_p_value = prop_test$p.value
 
 
-# Task 5
+if (prop_p_value < alpha) {
+  cat("The calculated p-value is:", prop_p_value, 
+      "\\newline Reject the null hypothesis. There is enough evidence to",
+      "suggest thatthe proportion of evenings which Alice worked > 3.8 hours",
+      "is greater than that of Bob")
+} else {
+  cat("The calculated p-value is:", prop_p_value, "\\newline Fail to reject",
+      "the null hypothesis. There is not enough evidence to suggest a",
+      "difference in proportions.")
+}
+
+```
