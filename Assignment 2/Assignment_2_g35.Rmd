@@ -112,41 +112,55 @@ Since $0.195 > -2.093$ and $0.195 < 2.093$, we fail to reject $H_0$. There is no
 # Task 4
 
 ## a) 
-```{r, results = "asis"}
-# Load the data
-birthweights <- read.table(file="/Users/bedirhangursoy/stat_assignments/Assignment 2/birthweight.txt", header = T)
+```{r, results = "asis", eval=FALSE}
+birthweights <- read.table(file="birthweight.txt", header = T)
 
-# Check normality using the Shapiro-Wilk test
 shapiro_test_result <- shapiro.test(birthweights$birthweight)
 
-cat("Since the p-value is", shapiro_test_result$p.value, "(way bigger than 0.05) and W value is", shapiro_test_result$statistic, " (really close to 1), we fail to reject the null hypothesis, and that suggests that the data is consistent with a normal distribution")
+cat("Since the p-value is", shapiro_test_result$p.value,
+    "(way bigger than 0.05) and W value is", shapiro_test_result$statistic,
+    "(really close to 1), we fail to reject the null hypothesis, and that", 
+    "suggests that the data is consistent with a normal distribution")
 
-# Print the test result
+
 print(shapiro_test_result)
 
-# Construct a bounded 96%-CI for mu
 t_test_result <- t.test(birthweights, conf.level = 0.96)
 
-# Print the confidence interval
-cat("Bounded 96%-CI for mu:", t_test_result$conf.int[1], "to", t_test_result$conf.int[2], "\n")
+cat("Bounded 96%-CI for mu:" , t_test_result$conf.int[1], "to", 
+    t_test_result$conf.int[2], "\n")
 
-# Evaluate the required sample size to ensure CI length is at most 100
 desired_ci_length <- 100
 percentage <- 0.98
 
-# Formula for sample size for a given CI length
-required_sample_size <- (((qnorm(percentage) * sd(birthweights$birthweight)) / (desired_ci_length))^2)
-# Print the required sample size
-cat("Required sample size for a CI length of", desired_ci_length, "is:", required_sample_size, "\n")
-```
-## b)
-```{r, results = "asis"}
-t_test_result_claim <- t.test(birthweights$birthweight, mu = 2800, alternative = "greater")
+required_sample_size <- (((qnorm(percentage) * sd(birthweights$birthweight)) /
+  (desired_ci_length))^2)
 
-cat("While lower endpoint of the confidence interval is a proper number", t_test_result_claim$conf.int[1], "the higher endpoint of the confiednce interval is", t_test_result_claim$conf.int[2], ". This occurs because we were trying to find a single number x which indicates that the mean is likely to be greater than or equal to", t_test_result_claim$conf.int[1],".
-In other words this is a one sided interval.")
+
+cat("Required sample size for a CI length of", desired_ci_length, "is:", 
+    required_sample_size, "\n")
 ```
+
+## b)
+
+```{r, results = "asis"}
+birthweights <- read.table(file="birthweight.txt", header = T)
+
+t_test_result_claim <- t.test(birthweights$birthweight, mu = 2800, 
+                              alternative = "greater")
+
+cat("While the lower endpoint of the confidence interval is a proper number",
+    t_test_result_claim$conf.int[1],
+    "the higher endpoint of the confidence interval is",
+    t_test_result_claim$conf.int[2],
+    ". This occurs because we were trying to find a single number x which indicates",
+    "that the mean is likely to be greater than or equal to",
+    t_test_result_claim$conf.int[1],
+    ". In other words, this is a one-sided interval.")
+```
+
 ## c)
+
 ```{r, results = "asis"}
 p_L_hat <- 0.25
 p_hat <- sum(birthweights$birthweight < 2600) / length(birthweights$birthweight)
@@ -157,7 +171,8 @@ confidence_interval_reconstructed <- c(p_L_hat, p_R_hat)
 
 z <- (E / sqrt((p_hat * (1 - p_hat)) / length(birthweights$birthweight)))
 confidence_level <- pnorm(z)
-cat("Confidence Interval:", confidence_interval_reconstructed, ". Confidence level:", confidence_level)
+cat("Confidence Interval:", confidence_interval_reconstructed, 
+    ". Confidence level:", confidence_level)
 ```
 
 # Task 5
