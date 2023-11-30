@@ -1,0 +1,45 @@
+---
+title: "Assignment 3"
+author: "Tim But, Mehmet Bedirhan Gursoy, Vincentas Ryliskis, group 035"
+date: "30 November 2023"
+output: pdf_document
+fontsize: 11pt
+highlight: tango
+---
+# Setting a Seed
+
+In order to ensure that the results in this report are reproducible, seed (123) was used when generating random numbers.
+```{r message=FALSE, warning=FALSE}
+set.seed(123)
+```
+# Task 1
+
+## a)
+
+## b)
+
+## c)
+
+# Task 2
+
+## a)
+
+## b)
+
+# Task 3
+
+## a)
+
+## b)
+
+## c)
+
+## d)
+
+# Task 4
+
+## a) 
+
+## b)
+
+## c)
