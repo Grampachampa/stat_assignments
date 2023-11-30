@@ -24,7 +24,101 @@ set.seed(123)
 
 ## a)
 
+The probability of any given fiber to break, given the table below, can be achieved by multiplying each number of breaks by it's frequency, and then dividing by the total number of fibers produced (5*280). This gives us the probability that any given fiber broke during testing.
+```{r, results = "asis", eval=TRUE, echo = FALSE}
+library(knitr)
+q2Table = matrix(c(0,1,2,3,4,5,
+  157, 69, 35, 17, 1, 1
+                   ), nrow=2, byrow=TRUE)
+#           Total:  450 129 165 744
+rownames(q2Table) <- c("Breaks", "Frequency")
+
+kable(q2Table)
+```
+
+$$ p =\frac{0*157 + 1* 69 + 2*35 + 3*17 + 4*1 + 5*1}{5*(157+69+35+17+1+1)} = \frac{199}{5*280} = 0.14214285714$$
+Therefore, $p \approx 0.142$.
+
 ## b)
+
+At the moment, we are working with the following values:\newline
+Number of trials $(n) =  1400$ \newline
+$p = 0.142$\newline
+
+In order to test whether the prediction regarding the distribution holds, we need to construct a table with expected values for the distribution assuming the same n and p. In order to do this, we need to calculate the probability that over 5 trials, a fiber will break 0, 1, 2, or more than 3 times. We can do this by using the Binomial distribution formula:
+
+$P(x) = \frac{n!}{(n-x)!x!}p^x(1-p)^{n-x} = \frac{5!}{(5-x)!x!}0.142^x(0.858)^{5-x}$
+
+When calculating the values, we assume that n = 5, p is as in part a, and x is a number between 0 and 5, based on the value we are calculating with P(x>=3) = P(3) + P(4) + P(5). This gives us the table below:
+
+```{r, results = "asis", eval=TRUE, echo = FALSE}
+library(knitr)
+expactations = matrix(c(0.465, 0.385, 0.128, 0.023
+                   ), nrow=1, byrow=TRUE)
+#           Total:  450 129 165 744
+colnames(expactations) <- c(0,1,2,"3+")
+rownames(expactations) <- c("Probability")
+
+kable(expactations)
+```
+
+Using this table, we can then multiply the probabilities by the expected 280 trials, in order to get the expected number of breaks. Below are the tables for both the expected number of breaks (rounded to the nearest values in order to have a sum of 280), as well as the observed frequency from part a):
+
+
+```{r, results = "asis", eval=TRUE, echo = FALSE}
+library(knitr)
+expactations_freq = matrix(c(130,108,36,6
+                   ), nrow=1, byrow=TRUE)
+#           Total:  450 129 165 744
+colnames(expactations_freq) <- c(0,1,2,"3+")
+rownames(expactations_freq) <- c("Expected Frequency")
+
+kable(expactations_freq)
+
+
+q2Table_b = matrix(c(157, 69, 35, 19
+                   ), nrow=1, byrow=TRUE)
+#           Total:  450 129 165 744
+
+colnames(q2Table_b) <- c(0,1,2,"3+")
+
+rownames(q2Table_b) <- c("Observed Frequency")
+
+kable(q2Table_b)
+```
+
+Now, we can use Pearson’s chi-squared test in order to determine whether the distributions match:
+
+$X^2 = \sum_{i=1}^{k = 3}\frac{(O_i - E_i)^2}{E_i}$
+
+```{r, results = "asis", echo = FALSE}
+
+E = matrix(c(130,108,36,6))
+O = matrix(c(157, 69, 35, 19))
+X = sum(((E-O)^2)/E)
+
+cat("Calculating using this formula, we get that $X^2 = ",X,"$.", sep="")
+
+```
+We can then use R in order to calculate the critical values for  $X^2_{279, 0.05}$, where we assume $\alpha = 0.05$, and use n = 280.
+
+```{r, results = "asis", echo = FALSE}
+X2 = 47.88547
+X_C = qchisq(p=0.05, df = 277)
+
+cat("This gives us $X^2_{279, 0.05}$ =", X_C)
+
+
+if (X2> X_C){
+  cat(", which is smaller than $X^2$. Therefore, the hypothesis that the distribution is binomial can be",
+      "rejected")
+  
+}else{
+  
+  cat(", which is larger than $X^2$. This supports the notion that the distribution is binomial")
+}
+```
+
 
 # Task 3
 
@@ -38,8 +132,53 @@ set.seed(123)
 
 # Task 4
 
-## a) 
+## a)
+
+For this question, we need to perform a Chi-square test, in order to establish that the proportional performance of Andy's friends is independent of which friend is playing. As such, we have $H_0$ that all of Andy's friends are equally strong opponents, and $H_1$ that their skill levels are not even. The code below compares the resulting p value with $\alpha = 0.05$, and will print it's findings after the code block.
+
+```{r, results = "asis", eval=TRUE}
+alpha = 0.05
+                  #  W    L   D   T
+results = matrix(c(179, 47, 57,# 283
+                    96, 17, 36,# 149
+                    52, 13, 18,# 83
+                    39, 15, 15,# 69
+                    84, 37, 39# 160
+                   ), nrow=5, byrow=TRUE)
+#           Total:  450 129 165 744
+colnames(results) <- c("Won", "Lost", "Draw")
+rownames(results) <- c("Bob", "Cecilia", "David", "Emma", "Freddy")
+
+part_a_chi_test = chisq.test(results)
+
+if (part_a_chi_test$p.value < alpha) {
+  cat("The difference in Andy's game results is statistically significant",
+"at the alpha level of 0.05, allowing us to reject H0. This suggests",
+"that Andy's friends are not equally strong opponents.\n")
+} else {
+  cat("There is no statistically significant difference in Andy's game",
+"results at the alpha level of 0.05, so H0 is not rejected. This suggests that",
+"there insufficient evidence to say Andy's friends are not equally strong",
+"opponents.\n")
+}
+
+
+```
 
 ## b)
 
+In order to investigate which entries contributed the most to the test statistics in a), we have to look at the individual contributions to the $X^2$ statistics of every element of the table. We can get these values through the code below (which will print a table containing these values).
+```{r table, eval=TRUE}
+library(knitr)
+kable(part_a_chi_test$res)
+```
+In this table, the values furthest away from zero have the most impact on the P value, and as such, we should be looking at those. Specifically, most notable are Cecilia's "Lost" value, as well as Freddy's values for "Lost" and "Won", since they have the highest absolute values. Andy lost and won less games than expected against Cecilia and Freddy (respectively), and lost more games against Freddy than would be expected.
+
 ## c)
+The code below prints the expected amount of games that Andy would win against Freddy, assuming the null hypothesis holds.
+```{r, results = "asis", eval=TRUE}
+cat("Andy is expected to win",part_a_chi_test$exp["Freddy", "Won"], 
+    "games vs Freddy")
+```
+
+As we can see, this is more than the 84 that Andy won in actuality, implying that Freddy might be a better player than the others. However, this does not imply that Freddy is an outlier, as that would normally require a contribution to the $X^2$ statistics of greater than 2 (the current value is -1.29).
