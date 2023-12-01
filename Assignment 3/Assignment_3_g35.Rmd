@@ -15,11 +15,48 @@ set.seed(123)
 # Task 1
 
 ## a)
+We have r = 0.9469 based on n = 5 pairs. 
+
+$H_0$: p = 0 \newline
+$H_a$: p $\neq$ 0
+
+significance level = 0.05
+
+We calculate r based on the formula below
+$$r = \frac{ \sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y}) }{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i-\bar{y})^2}}$$
+We calculate the t-statistic in the context of correlation coefficient of p testing. The formula is shown below.
+$$t_{\rho} = \frac{r \sqrt{n-2}}{\sqrt{1-r^2}}$$
+$$t_{\rho} = 5.10$$
+We calculte our critical values through a t-distrubution with an $\alpha$ of 0.05 and n = 5. Because it is a two tailed test the area in one tail is equal to 0.025.
+$$-t_{4, 0.025} = -2.776$$
+$$t_{4, 0.025} = 2.776$$
+Our critical values are between -2.776 and 2.776.
+Since $t_{\rho} = 5.10 > 2.776$, we reject $H_0$.
+
+There is sufficient evidence to reject the claim that there is no linear correlation opening bids suggested by the auctioneer in the auction the winning bids.
 
 ## b)
+The fitted regression equiation is given with the formula below. We assume the opening bid to be equal to $x$ and the winning bid to be $\hat{y}$.
+$$\hat{y} = b_1x + b_0$$
+We can calculate $b_1$ and $b_0$ through the formula: 
+To calculate $b_1$ we need to find the values of ${s_y}$ and ${s_x}$. We have already found these values in the question above so we can insert them to the formula and find 0.429.
+$$b_1 = r\frac{s_y}{s_x} $$
+$$b_1 = 0.429$$
+We will use the value of ${b_1}$ to find the the value of ${b_0}$. Moreover, we will use the mean values of y and x calculated from the question above.
+$$b_0 = \bar{y} - b_1\bar{x}$$
+$$b_0 = -4.56$$
+Finally, when we replace the variables in the formula with our numbers we get an equation shown below.
+$$\hat{y} = 0.429x - 4.56$$
 
 ## c)
+Again, we are assuming x values to be the opening bid in this question. When we replace the $x$ value, which is 300 in this case, to the equation calculated from the question above we receive the following answer:
 
+$$\hat{y} = 0.429*300 - 4.56 = 124.14$$
+Now, when $x$ = 1500:
+
+$$\hat{y} = 0.429*1500 - 4.56 = 638.94$$
+
+The actual winning bid of the opening bid with a value of 300 is 125. We received an answer of 124.14. The actual winning bid of the opening bid with a value of 1500 is 650. We received an answer of 638.94. These answers are not exact howeever, we calculated our fitted regression equation on the best fit line meaning that we will get an estimate value for each item since they are not one to one correlated. This is the reason why the numbers are not exactly the same but close to the actual value. 
 # Task 2
 
 ## a)
