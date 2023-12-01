@@ -57,50 +57,6 @@ Now, when $x$ = 1500:
 $$\hat{y} = 0.429*1500 - 4.56 = 638.94$$
 
 The actual winning bid of the opening bid with a value of 300 is 125. We received an answer of 124.14. The actual winning bid of the opening bid with a value of 1500 is 650. We received an answer of 638.94. These answers are not exact howeever, we calculated our fitted regression equation on the best fit line meaning that we will get an estimate value for each item since they are not one to one correlated. This is the reason why the numbers are not exactly the same but close to the actual value. 
-# Task 2
-
-## a)
-
-## b)
-
-# Task 3
-
-## a)
-
-## b)
-
-## c)
-
-## d)
-
-# Task 4
-
-## a) 
-
-## b)
-
-## c)
----
-title: "Assignment 3"
-author: "Tim But, Mehmet Bedirhan Gursoy, Vincentas Ryliskis, group 035"
-date: "30 November 2023"
-output: pdf_document
-fontsize: 11pt
-highlight: tango
----
-# Setting a Seed
-
-In order to ensure that the results in this report are reproducible, seed (123) was used when generating random numbers.
-```{r message=FALSE, warning=FALSE}
-set.seed(123)
-```
-# Task 1
-
-## a)
-
-## b)
-
-## c)
 
 # Task 2
 
@@ -264,3 +220,5 @@ cat("Andy is expected to win",part_a_chi_test$exp["Freddy", "Won"],
 ```
 
 As we can see, this is more than the 84 that Andy won in actuality, implying that Freddy might be a better player than the others. However, this does not imply that Freddy is an outlier, as that would normally require a contribution to the $X^2$ statistics of greater than 2 (the current value is -1.29).
+
+
